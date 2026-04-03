@@ -1,9 +1,11 @@
 package com.kritika.controller;
 
 import com.kritika.RestApiDemoApplication;
+import com.kritika.dto.StudentRequestdto;
 import com.kritika.entity.Student;
 import com.kritika.exceptions.StudentNotFoundException;
 import com.kritika.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +22,14 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<Student> createStudent(@RequestBody Student student){
-        Student s1 = service.createStudent(student);
+    public ResponseEntity<Student> createStudent(@Valid @RequestBody StudentRequestdto student){
+
+        Student student1 = new Student();
+        student1.setName(student.getName());
+        student1.setEmail(student.getEmail());
+        student1.setAge(student.getAge());
+
+        Student s1 = service.createStudent(student1);
         return ResponseEntity.status(201).body(s1);
     }
 
