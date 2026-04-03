@@ -2,6 +2,7 @@ package com.kritika.controller;
 
 import com.kritika.RestApiDemoApplication;
 import com.kritika.entity.Student;
+import com.kritika.exceptions.StudentNotFoundException;
 import com.kritika.service.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class StudentController {
     public ResponseEntity<Student> getStudentId(@PathVariable Long id){
         return service.getStudentWithId(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new StudentNotFoundException("Student not found with id "+ id));
     }
 
 }
