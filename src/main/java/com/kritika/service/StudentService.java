@@ -22,12 +22,12 @@ public class StudentService {
     }
 
     public void deleteStudent(Long id){
-        studentList.removeIf(Student -> Student.getId() == id);
+        studentList.removeIf(Student -> Student.getId().equals(id));
         System.out.println("Done");
     }
 
     public Optional<Student> getStudentWithId(Long id){
-       return studentList.stream().filter(Student -> Student.getId() == id)
+       return studentList.stream().filter(Student -> Student.getId().equals(id))
                .findFirst();
     }
 }
