@@ -75,4 +75,14 @@ public class StudentService {
     public List<Student> getStudentByAge(Integer age){
        return studentList.stream().filter(student -> age.equals(student.getAge())).toList();
     }
+
+    public List<Student> getStudentPaged(int page, int size){
+        int start = page * size ;
+        int end = Math.min(start + size, studentList.size() );
+
+        if (start >= studentList.size()) {
+            return new ArrayList<>();
+        }
+        return studentList.subList(start, end);
+    }
 }

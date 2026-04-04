@@ -72,4 +72,13 @@ public class StudentController {
         return ResponseEntity.ok(service.getStudentByAge(age));
     }
 
+    @GetMapping("/paged")
+    public ResponseEntity<List<Student>> getStudentsPaged(
+            @RequestParam int page,
+            @RequestParam int size) {
+
+        return ResponseEntity.ok(
+                service.getStudentPaged(page, size)
+        );
+    }
 }
