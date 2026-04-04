@@ -81,4 +81,9 @@ public class StudentController {
                 service.getStudentPaged(page, size)
         );
     }
+
+    @GetMapping
+    public ResponseEntity<List<Student>> getStudentSorted(){
+        return ResponseEntity.ok(service.sortStudentByAge());
+    }
 }

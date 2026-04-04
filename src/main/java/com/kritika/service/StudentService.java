@@ -4,6 +4,7 @@ import com.kritika.dto.StudentRequestdto;
 import com.kritika.entity.Student;
 import com.kritika.exceptions.StudentNotFoundException;
 import jakarta.validation.constraints.Null;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -84,5 +85,9 @@ public class StudentService {
             return new ArrayList<>();
         }
         return studentList.subList(start, end);
+    }
+
+    public List<Student> sortStudentByAge(){
+        return studentList.stream().sorted((s1,s2) -> s1.getAge().compareTo(s2.getAge())).toList();
     }
 }
