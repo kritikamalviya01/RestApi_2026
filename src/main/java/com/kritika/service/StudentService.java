@@ -1,5 +1,6 @@
 package com.kritika.service;
 
+import com.kritika.dto.StudentRequestdto;
 import com.kritika.entity.Student;
 import com.kritika.exceptions.StudentNotFoundException;
 import jakarta.validation.constraints.Null;
@@ -48,6 +49,26 @@ public class StudentService {
         existingStudent.setEmail(updatedStudent.getEmail());
         existingStudent.setAge(updatedStudent.getAge());
 
+        return existingStudent;
+    }
+
+    public Student partialUpdate(Long id, StudentRequestdto student){
+        Student existingStudent = getStudentWithId(id)
+                .orElseThrow(() ->
+                        new StudentNotFoundException("Student not found with id "+id)
+                );
+
+        if(student.getName() != null){
+            existingStudent.setName(student.getName());
+        }
+
+        if(student.getEmail() != null){
+            existingStudent.setEmail(student.getEmail());
+        }
+
+        if(student.getAge() != null){
+            existingStudent.setAge(student.getAge());
+        }
         return existingStudent;
     }
 }

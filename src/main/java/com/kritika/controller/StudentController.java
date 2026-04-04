@@ -61,4 +61,10 @@ public class StudentController {
         return ResponseEntity.status(200).body(student);
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<Student> partialUpdate(@PathVariable Long id, @RequestBody StudentRequestdto studentRequestdto){
+        Student S = service.partialUpdate(id,studentRequestdto);
+        return ResponseEntity.status(200).body(S);
+    }
+
 }
