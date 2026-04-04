@@ -51,4 +51,14 @@ public class StudentController {
                 .orElseThrow(() -> new StudentNotFoundException("Student not found with id "+ id));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody StudentRequestdto studentRequestdto){
+        Student s1 = new Student();
+        s1.setName(studentRequestdto.getName());
+        s1.setEmail(studentRequestdto.getEmail());
+        s1.setAge(studentRequestdto.getAge());
+        Student student = service.updateStudent(id,s1);
+        return ResponseEntity.status(200).body(student);
+    }
+
 }
