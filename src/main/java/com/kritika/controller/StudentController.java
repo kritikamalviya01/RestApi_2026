@@ -67,4 +67,9 @@ public class StudentController {
         return ResponseEntity.status(200).body(S);
     }
 
+    @GetMapping("/Search")
+    public ResponseEntity<List<Student>> studentByAge(@RequestParam Integer age){
+        return ResponseEntity.ok(service.getStudentByAge(age));
+    }
+
 }

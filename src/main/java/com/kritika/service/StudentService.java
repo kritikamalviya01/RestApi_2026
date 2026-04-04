@@ -71,4 +71,8 @@ public class StudentService {
         }
         return existingStudent;
     }
+
+    public List<Student> getStudentByAge(Integer age){
+       return studentList.stream().filter(student -> age.equals(student.getAge())).toList();
+    }
 }
