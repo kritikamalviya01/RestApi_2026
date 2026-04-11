@@ -82,8 +82,10 @@ public class StudentController {
         );
     }
 
-    @GetMapping
+    @GetMapping("/sorted")
     public ResponseEntity<List<Student>> getStudentSorted(){
         return ResponseEntity.ok(service.sortStudentByAge());
     }
+
+
 }
