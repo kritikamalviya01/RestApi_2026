@@ -3,10 +3,12 @@ package com.kritika.service;
 import com.kritika.entity.Student;
 import com.kritika.exceptions.StudentNotFoundException;
 import com.kritika.repository.StudentRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class StudentServiceJPA {
 
     private final StudentRepository studentRepository;
