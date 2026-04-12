@@ -3,8 +3,11 @@ package com.kritika.service;
 import com.kritika.entity.Student;
 import com.kritika.exceptions.StudentNotFoundException;
 import com.kritika.repository.StudentRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -45,7 +48,7 @@ public class StudentServiceJPA {
     }
 
     public List<Student> searchByName(String name){
-        return studentRepository.fineByName(name);
+        return studentRepository.findByNameContaining(name);
     }
 
     public List<Student> searchByAge(Integer age){
@@ -54,6 +57,15 @@ public class StudentServiceJPA {
 
     public Optional<Student> searchByEmail(String email){
         return studentRepository.findByEmail(email);
+    }
+
+    public Page<Student> getStudentPage(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return studentRepository.findAll(pageable);
+    }
+
+    public List<Student> getGreaterThan(Integer age){
+        return studentRepository.findByAgeGreaterThan(age);
     }
 
 }

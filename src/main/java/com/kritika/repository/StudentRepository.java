@@ -10,7 +10,9 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     Optional<Student> findByEmail(String email);
 
-    List<Student> fineByName(String name);
+    List<Student> findByNameContaining(String name);
 
     List<Student> findByAge(Integer age);
+
+    List<Student> findByAgeGreaterThan(Integer age);
 }

@@ -6,6 +6,7 @@ import com.kritika.exceptions.StudentNotFoundException;
 import com.kritika.repository.StudentRepository;
 import com.kritika.service.StudentServiceJPA;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +18,12 @@ public class StudentControllerJPA {
 
     private final StudentServiceJPA studentServiceJPA;
 
-    public StudentControllerJPA(StudentServiceJPA studentServiceJPA){
+    public StudentControllerJPA(StudentServiceJPA studentServiceJPA) {
         this.studentServiceJPA = studentServiceJPA;
     }
 
     @PostMapping
-    public ResponseEntity<Student> createStudent(@Valid @RequestBody StudentRequestdto student){
+    public ResponseEntity<Student> createStudent(@Valid @RequestBody StudentRequestdto student) {
 
         Student student1 = new Student();
         student1.setName(student.getName());
@@ -34,45 +35,60 @@ public class StudentControllerJPA {
     }
 
     @GetMapping
-    public ResponseEntity<List<Student>> getStudents(){
+    public ResponseEntity<List<Student>> getStudents() {
         return ResponseEntity.ok(studentServiceJPA.getStudents());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletStudent(@PathVariable Long id){
+    public ResponseEntity<Void> deletStudent(@PathVariable Long id) {
         studentServiceJPA.deleteStudent(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> getStudentId(@PathVariable Long id){
+    public ResponseEntity<Student> getStudentId(@PathVariable Long id) {
         return studentServiceJPA.getStudentWithId(id)
                 .map(ResponseEntity::ok)
-                .orElseThrow(() -> new StudentNotFoundException("Student not found with id "+ id));
+                .orElseThrow(() -> new StudentNotFoundException("Student not found with id " + id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody StudentRequestdto studentRequestdto){
+    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody StudentRequestdto studentRequestdto) {
         Student s1 = new Student();
         s1.setName(studentRequestdto.getName());
         s1.setEmail(studentRequestdto.getEmail());
         s1.setAge(studentRequestdto.getAge());
-        Student student = studentServiceJPA.updateStudent(id,s1);
+        Student student = studentServiceJPA.updateStudent(id, s1);
         return ResponseEntity.status(200).body(student);
     }
 
     @GetMapping("/search-name")
-    public ResponseEntity<List<Student>> searchByName(@RequestParam String name){
+    public ResponseEntity<List<Student>> searchByName(@RequestParam String name) {
         return ResponseEntity.ok(studentServiceJPA.searchByName(name));
     }
 
     @GetMapping("/search-age")
-    public ResponseEntity<List<Student>> searchByAge(@RequestParam Integer age){
+    public ResponseEntity<List<Student>> searchByAge(@RequestParam Integer age) {
         return ResponseEntity.ok(studentServiceJPA.searchByAge(age));
     }
 
+    @GetMapping("/olderthan")
+    public ResponseEntity<List<Student>> getGreaterThanAge(@RequestParam Integer age){
+        return ResponseEntity.ok(studentServiceJPA.getGreaterThan(age));
+    }
+
     @GetMapping("/search-email")
-    public ResponseEntity<Student> searchByEmail(@RequestParam String email){
+    public ResponseEntity<Student> searchByEmail(@RequestParam String email) {
         return ResponseEntity.ok(studentServiceJPA.searchByEmail(email).orElseThrow(() -> new StudentNotFoundException("EMail not found")));
+    }
+
+    @GetMapping("/paged")
+    public ResponseEntity<Page<Student>> getStudentsPaged(
+            @RequestParam int page,
+            @RequestParam int size) {
+
+        return ResponseEntity.ok(
+                studentServiceJPA.getStudentPage(page, size)
+        );
     }
 }
