@@ -2,6 +2,7 @@ package com.kritika.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,6 +18,14 @@ public class Student {
 
     @OneToMany(mappedBy = "student" ,cascade = CascadeType.ALL)
     private List<Address> address;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "student_course",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private List<Courses> courses = new ArrayList<>();
 
     public Student(){
     }
@@ -67,6 +76,14 @@ public class Student {
 
     public void setAddress(List<Address> address) {
         this.address = address;
+    }
+
+    public List<Courses> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Courses> courses) {
+        this.courses = courses;
     }
 
     @Override

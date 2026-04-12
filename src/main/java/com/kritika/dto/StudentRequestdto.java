@@ -1,11 +1,12 @@
 package com.kritika.dto;
 
 import com.kritika.entity.Address;
+import com.kritika.entity.Courses;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
@@ -22,6 +23,9 @@ public class StudentRequestdto {
 
     @OneToMany
     private List<Address> addresses;
+
+    @ManyToMany
+    private List<Courses> courses;
 
     StudentRequestdto(){
 
@@ -57,5 +61,13 @@ public class StudentRequestdto {
 
     public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
+    }
+
+    public List<Courses> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Courses> courses) {
+        this.courses = courses;
     }
 }

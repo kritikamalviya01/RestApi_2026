@@ -1,9 +1,11 @@
 package com.kritika.service;
 
 import com.kritika.entity.Address;
+import com.kritika.entity.Courses;
 import com.kritika.entity.Student;
 import com.kritika.exceptions.StudentNotFoundException;
 import com.kritika.repository.AddressRepository;
+import com.kritika.repository.CourseRepository;
 import com.kritika.repository.StudentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,9 +23,12 @@ public class StudentServiceJPA {
 
     private final AddressRepository addressRepository;
 
-    public StudentServiceJPA(StudentRepository studentRepository, AddressRepository addressRepository){
+    private final CourseRepository courseRepository;
+
+    public StudentServiceJPA(StudentRepository studentRepository, AddressRepository addressRepository, CourseRepository courseRepository){
         this.studentRepository = studentRepository;
         this.addressRepository = addressRepository;
+        this.courseRepository = courseRepository;
 
     }
 
@@ -76,6 +81,10 @@ public class StudentServiceJPA {
 
     public List<Student> getStudentAboveAge(Integer age){
         return studentRepository.getStudentsAboveAge(age);
+    }
+
+    public Courses createCourse(Courses courses){
+        return courseRepository.save(courses);
     }
 
     public Address updateAddress(Long id, Address address){
