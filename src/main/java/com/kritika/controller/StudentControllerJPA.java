@@ -60,4 +60,19 @@ public class StudentControllerJPA {
         Student student = studentServiceJPA.updateStudent(id,s1);
         return ResponseEntity.status(200).body(student);
     }
+
+    @GetMapping("/search-name")
+    public ResponseEntity<List<Student>> searchByName(@RequestParam String name){
+        return ResponseEntity.ok(studentServiceJPA.searchByName(name));
+    }
+
+    @GetMapping("/search-age")
+    public ResponseEntity<List<Student>> searchByAge(@RequestParam Integer age){
+        return ResponseEntity.ok(studentServiceJPA.searchByAge(age));
+    }
+
+    @GetMapping("/search-email")
+    public ResponseEntity<Student> searchByEmail(@RequestParam String email){
+        return ResponseEntity.ok(studentServiceJPA.searchByEmail(email).orElseThrow(() -> new StudentNotFoundException("EMail not found")));
+    }
 }

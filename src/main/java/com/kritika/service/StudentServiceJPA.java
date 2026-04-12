@@ -4,6 +4,7 @@ import com.kritika.entity.Student;
 import com.kritika.exceptions.StudentNotFoundException;
 import com.kritika.repository.StudentRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,5 +44,16 @@ public class StudentServiceJPA {
            return studentRepository.save(existingStudent);
     }
 
+    public List<Student> searchByName(String name){
+        return studentRepository.fineByName(name);
+    }
+
+    public List<Student> searchByAge(Integer age){
+        return  studentRepository.findByAge(age);
+    }
+
+    public Optional<Student> searchByEmail(String email){
+        return studentRepository.findByEmail(email);
+    }
 
 }
