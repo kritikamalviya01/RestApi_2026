@@ -1,8 +1,10 @@
 package com.kritika.controller;
 
 import com.kritika.dto.StudentRequestdto;
+import com.kritika.entity.Address;
 import com.kritika.entity.Student;
 import com.kritika.exceptions.StudentNotFoundException;
+import com.kritika.repository.AddressRepository;
 import com.kritika.repository.StudentRepository;
 import com.kritika.service.StudentServiceJPA;
 import jakarta.validation.ReportAsSingleViolation;
@@ -31,13 +33,26 @@ public class StudentControllerJPA {
         student1.setEmail(student.getEmail());
         student1.setAge(student.getAge());
 
+        if(student.getAddresses() != null){
+            for(Address address: student.getAddresses()){
+                address.setStudent(student1);
+            }
+            student1.setAddress(student.getAddresses());
+        }
+
         Student s1 = studentServiceJPA.createStudent(student1);
+
         return ResponseEntity.status(201).body(s1);
     }
 
     @GetMapping
     public ResponseEntity<List<Student>> getStudents() {
         return ResponseEntity.ok(studentServiceJPA.getStudents());
+    }
+
+    @PostMapping("/{id}/address")
+    public ResponseEntity<Address> setAddress(@PathVariable Long id, @RequestBody Address address){
+        return ResponseEntity.ok(studentServiceJPA.updateAddress(id, address));
     }
 
     @DeleteMapping("/{id}")
