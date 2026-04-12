@@ -5,6 +5,7 @@ import com.kritika.entity.Student;
 import com.kritika.exceptions.StudentNotFoundException;
 import com.kritika.repository.StudentRepository;
 import com.kritika.service.StudentServiceJPA;
+import jakarta.validation.ReportAsSingleViolation;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -90,5 +91,10 @@ public class StudentControllerJPA {
         return ResponseEntity.ok(
                 studentServiceJPA.getStudentPage(page, size)
         );
+    }
+
+    @GetMapping("/aboveAge")
+    public ResponseEntity<List<Student>> getStudentAboveAge( @RequestParam Integer  age){
+        return ResponseEntity.ok(studentServiceJPA.getStudentAboveAge(age));
     }
 }

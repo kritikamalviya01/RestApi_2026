@@ -68,4 +68,8 @@ public class StudentServiceJPA {
         return studentRepository.findByAgeGreaterThan(age);
     }
 
+    public List<Student> getStudentAboveAge(Integer age){
+        return studentRepository.getStudentsAboveAge(age);
+    }
+
 }
